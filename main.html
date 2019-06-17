@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- <link rel="stylesheet" href="/leaflet/leaflet.css"/> -->
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+		<style>
+		    html, body, #map { /* height: 800px; */ 
+			width: 100%;
+			height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<button onclick="xiamen()">厦门</button>
+		<button onclick="nanjing()">南京</button>
+		<button onclick="fuzhou()">福州</button>
+		<button onclick="chongqing()">重庆</button>
+		<select>
+		  <option value ="2019">2019</option>
+		</select>
+		<label value="year">年</label>
+		<select>
+		  <option value ="January">1</option>
+		</select>
+		<label value="month">月</label>
+		<select id="day">
+		  <option value ="1">1</option>
+		  <option value ="2">2</option>
+		</select>
+		<label value="day">日</label>
+		<select id="hour">
+		  <option value ="1">8</option>
+		  <option value ="2">9</option>
+		  <option value ="3">10</option>
+		  <option value ="4">11</option>
+		  <option value ="5">12</option>
+		  <option value ="6">13</option>
+		  <option value ="7">14</option>
+		  <option value ="8">15</option>
+		  <option value ="9">16</option>
+		  <option value ="10">17</option>
+		  <option value ="11">18</option>
+		  <option value ="12">19</option>
+		  <option value ="13">20</option>
+		  <option value ="14">21</option>
+		  <option value ="15">22</option>
+		</select>
+		<label value="hour">时</label>
+		<select id="min">
+		  <option value ="1">0</option>
+		  <option value ="2">5</option>
+		  <option value ="3">10</option>
+		  <option value ="4">15</option>
+		  <option value ="5">20</option>
+		  <option value ="6">25</option>
+		  <option value ="7">30</option>
+		  <option value ="8">35</option>
+		  <option value ="9">40</option>
+		  <option value ="10">45</option>
+		  <option value ="11">50</option>
+		  <option value ="12">55</option>
+		</select>
+		<label value="min">分</label>
+		<button onclick="setTime()">确定</button>
+		<div id="map"></div> 
+		<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+		 <script>
+			var mymap = L.map('map').setView([24.5207, 118.131], 11);
+			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+				attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+			}).addTo(mymap);
+			var images = new Array();
+			var num = 464;
+			for(var i=0; i<num; i++) {
+				images[i] = "XM/" + i + ".png"
+			}
+			var images2 = new Array();
+			for(var i=0; i<num; i++) {
+				images2[i] = "NJ/" + i + ".png"
+			}
+			var images3 = new Array();
+			for(var i=0; i<num; i++) {
+				images3[i] = "FZ/" + i + ".png"
+			}
+			var images4 = new Array();
+			for(var i=0; i<num; i++) {
+				images4[i] = "CQ/" + i + ".png"
+			}
+			var imageUBs = new Array();
+			for(var i=0; i<images.length; i++) {
+				var imageUrl = images[i],
+					imageBounds = [[24.4160, 117.8668], [24.9262, 118.4260]];
+				imageUBs[i] = L.imageOverlay(imageUrl, imageBounds); 
+			}
+			var imageUBs2 = new Array();
+			for(var i=0; i<images2.length; i++) {
+				var imageUrl = images2[i],
+					imageBounds = [[31.1530,118.3327], [32.6545,119.2866]];
+				imageUBs2[i] = L.imageOverlay(imageUrl, imageBounds); 
+			}
+			var imageUBs3 = new Array();
+			for(var i=0; i<images3.length; i++) {
+				var imageUrl = images3[i],
+					imageBounds = [[25.2532,118.3595], [26.6657,119.9892]];
+				imageUBs3[i] = L.imageOverlay(imageUrl, imageBounds); 
+			}
+			var imageUBs4 = new Array();
+			for(var i=0; i<images4.length; i++) {
+				var imageUrl = images4[i],
+					imageBounds = [[28.0557, 105.2095], [32.2821,110.2629]];
+				imageUBs4[i] = L.imageOverlay(imageUrl, imageBounds); 
+			}
+			
+			function changeImage(index) {
+				// for(var i=0; i<images.length; i++) {
+				// 	if (mymap.hasLayer(imageUBs[i])) { 
+				// 		mymap.removeLayer(imageUBs[i]); 
+				// 	}	
+				// }
+				imageUBs[index].addTo(mymap);
+				imageUBs2[index].addTo(mymap);
+				imageUBs3[index].addTo(mymap);
+				imageUBs4[index].addTo(mymap);
+				imageUBs5[index].addTo(mymap);
+			}
+			imageUBs[0].addTo(mymap);
+			imageUBs2[0].addTo(mymap);
+			imageUBs3[0].addTo(mymap);
+			imageUBs4[0].addTo(mymap);
+			imageUBs5[0].addTo(mymap);
+			for(var i=1; i<num; i++) {
+				var str = "changeImage(" + i + ")"
+				var time = i * 300000
+				setTimeout(str, time)
+			}
+			function setTime() {
+				 var selectDay=document.getElementById("day");
+				 var index1=selectDay.selectedIndex ;  
+				 var day=selectDay.options[index1].value;
+				 var selectHour=document.getElementById("hour");
+				 var index2=selectHour.selectedIndex ;  
+				 var hour=selectHour.options[index2].value;
+				 var selectMin=document.getElementById("min");
+				 var index3=selectMin.selectedIndex;
+				 var min=selectMin.options[index3].value;
+				 var imageNum=(parseInt(day) - 1) * 177 + (parseInt(hour) - 1) * 12 + parseInt(min);
+				 changeImage(imageNum - 1)
+			}
+			function xiamen() {
+			  mymap.setView([24.5207, 118.131], 11);
+		  }
+			function nanjing() {
+			  mymap.setView([32.0145,118.7416], 11);
+		  }
+			function fuzhou() {
+			  mymap.setView([26.0672,119.3695], 11);
+		  }
+			function chongqing() {
+			  mymap.setView([29.2557,106.2595], 9);
+		  }
+			function guangzhou() {
+			  mymap.setView([29.2557,106.2595], 9);
+		  }
+		 </script>
+	</body>
+</html>
